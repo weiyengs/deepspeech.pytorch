@@ -1,0 +1,24 @@
+# @package _global_
+data:
+  train_path: train_data_jp/train_manifest_d4.json
+  val_path: train_data_jp/valid_manifest_d3.json
+  batch_size: 12
+  num_workers: 1
+  labels_path: labels_jp.json
+trainer:
+  max_epochs: 25
+  gpus: 1
+  precision: 16
+  gradient_clip_val: 400  # Norm cutoff to prevent explosion of gradients
+  accelerator: ddp
+  plugins: ddp_sharded
+  checkpoint_callback: True
+checkpoint:
+  save_top_k: 1
+  monitor: "wer"
+  verbose: True
+  #dirpath: /root/deepspeech/outputs/
+  #filiename: /root/deepspeech/models/e2.ckpt 
+  #checkpoint: True
+load_auto_checkpoint: True
+model_file: /root/deepspeech/models/d4_e8.ckpt
